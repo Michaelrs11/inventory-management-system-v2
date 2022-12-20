@@ -1,0 +1,182 @@
+﻿@page
+@model IMS.BE.Pages.Transaction.ViewInboundModel
+@{
+    int ctr = 1;
+    var currentPage = Model.Page;
+    ViewData["Title"] = "View Inbound";
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>View Inbound</h2>
+    </div>
+</div>
+<hr />
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get">
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label class="form-label" asp-for="@Model.GudangCode">Gudang</label>
+                            <select class="form-control" id="gudangCode" name="gudangCode">
+                                <option selected value="">All</option>
+                                @foreach (var item in Model.GudangCodeDropdown)
+                                {
+                                    @if (item.Key == Model.GudangCode)
+                                    {
+                                        <option value="@item.Key" selected>@item.Value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    }
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="dateFrom">Request Date</label>
+
+                                <input type="date" class="form-control" max="@Model.GetFormatedDate(Model.DateTo)" id="dateFrom" name="dateFrom" placeholder="Choose Date From" value="@Model.GetFormatedDate(Model.DateFrom)" onchange="this.form.submit()">
+                            </div>
+                            <div class="form-group col mt-auto mx-auto text-center" style="max-width: 50px">
+                                <label for="dateTo">To</label>
+                            </div>
+                            <div class="form-group col mt-auto">
+                                <input type="date" class="form-control" min="@Model.GetFormatedDate(Model.DateFrom)" id="dateTo" name="dateTo" placeholder="Choose Date To" value="@Model.GetFormatedDate(Model.DateTo)" onchange="this.form.submit()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-12 mt-auto d-flex justify-content-end ml-auto">
+                            <a class="btn btn-secondary mr-1 mt-auto"
+                               asp-route-p="">
+                                Reset
+                            </a>
+                            <button type="submit" class="btn btn-primary mt-auto">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Sku Code</th>
+                        <th>Sku Name</th>
+                        <th>Stock In    </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RequestList)
+                    {
+                        <tr>
+                            <td>@ctr</td>
+                            <td>@item.SkuId</td>
+                            <td>@item.Name</td>
+                            <td>@item.StockIn</td>
+                        </tr>
+                        ctr++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                @{
+                    var activeClass = "";
+
+                    <li class="page-item">
+                        <a asp-route-p="1"
+                       class="page-link">
+                            First
+                        </a>
+                    </li>
+                    if (Model.Pager.TotalPages > 0)
+                    {
+                        var startPage = Model.Pager.StartPages;
+                        var endPage = Model.Pager.EndPages;
+
+                        if (currentPage >= endPage - 3 && endPage >= 5)
+                        {
+                            startPage = endPage - 4;
+                        }
+                        else
+                        {
+                            startPage = (currentPage.Value - 1 == 0) ? 1 : currentPage.Value - 1;
+                        }
+
+                        endPage = (endPage > 5) ? startPage + 4 : endPage;
+
+                        if (startPage != 1)
+                        {
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@(currentPage-1)"
+                       class="page-link">
+                                    <span class="fa-solid fa-angles-left"></span>
+                                </a>
+                            </li>
+                        }
+
+                        @for (var pge = startPage; pge <= endPage; pge++)
+                        {
+                            if (currentPage.Value - 1 == pge)
+                            {
+                                activeClass = "active";
+                            }
+                            else
+                            {
+                                activeClass = "";
+                            }
+
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@pge"
+                       class="page-link">
+                                    @pge
+                                </a>
+                            </li>
+                        }
+
+                        if (endPage != Model.Pager.EndPages)
+                        {
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@(currentPage+1)"
+                       class="page-link">
+                                    <span class="fa-solid fa-angles-right"></span>
+                                </a>
+                            </li>
+                        }
+
+                    }
+                    var lastPage = Model.TotalPage;
+                    if (lastPage < 1)
+                    {
+                        lastPage = 1;
+                    }
+                    <li class="page-item">
+                        <a asp-route-p="@lastPage"
+                       class="page-link">
+                            Last
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

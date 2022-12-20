@@ -1,0 +1,53 @@
+﻿@page "{id}"
+@model IMS.BE.Pages.Master.Gudang.EditModel
+@{
+}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Edit Gudang</h2>
+    </div>
+</div>
+<hr />
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+            {
+                <div class="text-danger">
+                    @Model.ErrorMessage
+                </div>
+            }
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label for="SkuId">Kode Gudang</label>
+                            <input type="text" class="form-control" asp-for="GudangModel.GudangCode" disabled />
+                            <span asp-validation-for="GudangModel.GudangCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label for="status">Name</label>
+                            <input type="text" class="form-control" asp-for="GudangModel.Name" />
+                            <span asp-validation-for="GudangModel.Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label>Outlet Code</label>
+                            <input type="text" class="form-control" asp-for="GudangModel.Outlet" disabled />
+                            <span asp-validation-for="GudangModel.GudangCode" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-12 mt-auto d-flex justify-content-end ml-auto">
+                            <button type="submit" class="btn btn-primary mt-auto">Simpan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

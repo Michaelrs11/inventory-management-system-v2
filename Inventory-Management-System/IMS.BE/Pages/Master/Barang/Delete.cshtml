@@ -1,0 +1,11 @@
+﻿@page "{id}"
+@model IMS.BE.Pages.Master.DeleteModel
+@{
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">
+        @Model.ErrorMessage
+    </div>
+}

@@ -1,0 +1,36 @@
+﻿@page
+@model IMS.BE.Pages.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h1 class="mb-3">Login</h1>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="text-danger">
+                    @Model.ErrorMessage
+                </div>
+            }
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="LoginForm.Username">Username</label>
+                    <input type="text" asp-for="LoginForm.Username" class="form-control" />
+                    <span asp-validation-for="LoginForm.Username" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="LoginForm.Password">Password</label>
+                    <input type="password" asp-for="LoginForm.Password" class="form-control" />
+                    <span asp-validation-for="LoginForm.Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary col-md-3">Login</button>
+                    <a asp-page="/Auth/Register" class="btn btn-link col-md-3">Register</a>
+                    <a asp-page="/Auth/ForgotPass" class="btn btn-link col-md-3">Forgot Password</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

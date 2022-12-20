@@ -1,0 +1,162 @@
+﻿@page "{param?}"
+@model IMS.BE.Pages.Master.Kategori.ViewModel
+@{
+    int ctr = 1;
+    var currentPage = Model.Page;
+    ViewData["Title"] = "List Kategori";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>List Barang</h2>
+    </div>
+</div>
+<hr />
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get">
+            <div class="form-row">
+                <div class="form-group col-sm-12">
+                    <div class="form-row">
+                        <div class="col-sm-6">
+                            <label for="leaveType">Search</label>
+                            <input type="text" class="form-control" asp-for="Parameter" placeholder="Search by Kategori Code or Name" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-12 mt-auto d-flex justify-content-end ml-auto">
+                            <a class="btn btn-secondary mr-1 mt-auto"
+                               asp-route-p="">
+                                Reset
+                            </a>
+                            <button type="submit" class="btn btn-primary mt-auto">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>SKU Code</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CRUDKategoris)
+                    {
+                        <tr>
+                            <td>@ctr</td>
+                            <td>@item.CategoryId</td>
+                            <td>@item.Name</td>
+                            <td>
+                                <a asp-page="/Master/Kategori/Edit"
+                               asp-route-id="@item.CategoryId"
+                               class="btn btn-warning">Edit</a>
+                                <a asp-page="/Master/Kategori/Delete"
+                               asp-route-id="@item.CategoryId"
+                               class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        ctr++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                @{
+                    var activeClass = "";
+
+                    <li class="page-item">
+                        <a asp-route-p="1"
+                       class="page-link">
+                            First
+                        </a>
+                    </li>
+                    if (Model.Pager.TotalPages > 0)
+                    {
+                        var startPage = Model.Pager.StartPages;
+                        var endPage = Model.Pager.EndPages;
+
+                        if (currentPage >= endPage - 3 && endPage >= 5)
+                        {
+                            startPage = endPage - 4;
+                        }
+                        else
+                        {
+                            startPage = (currentPage.Value - 1 == 0) ? 1 : currentPage.Value - 1;
+                        }
+
+                        endPage = (endPage > 5) ? startPage + 4 : endPage;
+
+                        if (startPage != 1)
+                        {
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@(currentPage-1)"
+                       class="page-link">
+                                    <span class="fa-solid fa-angles-left"></span>
+                                </a>
+                            </li>
+                        }
+
+                        @for (var pge = startPage; pge <= endPage; pge++)
+                        {
+                            if (currentPage == pge)
+                            {
+                                activeClass = "active";
+                            }
+                            else
+                            {
+                                activeClass = "";
+                            }
+
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@pge"
+                       class="page-link">
+                                    @pge
+                                </a>
+                            </li>
+                        }
+
+                        if (endPage != Model.Pager.EndPages)
+                        {
+                            <li class="page-item @activeClass">
+                                <a asp-route-p="@(currentPage+1)"
+                       class="page-link">
+                                    <span class="fa-solid fa-angles-right"></span>
+                                </a>
+                            </li>
+                        }
+
+                    }
+                    var lastPage = Model.TotalPage;
+                    if (lastPage < 1)
+                    {
+                        lastPage = 1;
+                    }
+                    <li class="page-item">
+                        <a asp-route-p="@lastPage"
+                       class="page-link">
+                            Last
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

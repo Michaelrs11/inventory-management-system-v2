@@ -1,0 +1,50 @@
+﻿@page
+@model IMS.BE.Pages.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h1 class="mb-3">Register</h1>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.UserCode" placeholder="User Code">User Code</label>
+                    <input type="text" asp-for="RegisterForm.UserCode" class="form-control" />
+                    <span asp-validation-for="RegisterForm.UserCode" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.Name" placeholder="Name">Name</label>
+                    <input type="text" asp-for="RegisterForm.Name" class="form-control" />
+                    <span asp-validation-for="RegisterForm.Name" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.UserRole">Role</label>
+                    <select class="form-select" asp-for="RegisterForm.UserRole" asp-items="Model.UserRoleDropdown">
+                        <option value="">--Select Role--</option>
+                    </select>
+                    <span asp-validation-for="RegisterForm.UserRole" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.Email" placeholder="Email">Email</label>
+                    <input type="email" asp-for="RegisterForm.Email" class="form-control" />
+                    <span asp-validation-for="RegisterForm.Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.Password" placeholder="Password">Password</label>
+                    <input type="password" asp-for="RegisterForm.Password" class="form-control" />
+                    <span asp-validation-for="RegisterForm.Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RegisterForm.ConfirmPassword" placeholder="Confirm Password">Confirmation Password</label>
+                    <input type="password" asp-for="RegisterForm.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="RegisterForm.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary col-md-3">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
