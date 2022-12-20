@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>3c15281c-e437-4d5a-9ecc-96f9256eaaad</UserSecretsId>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Aspose.Slides.NET" Version="22.10.0" />
