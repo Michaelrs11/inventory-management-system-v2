@@ -21,14 +21,6 @@ namespace IMS.Entities
         public virtual DbSet<StockTransaction> StockTransactions { get; set; }
         public virtual DbSet<UserRoleEnum> UserRoleEnums { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySQL("Server=ftp.leebongisland.com;Port=3306;Database=ariesch_pbidn11111;Uid=ariesch_pbidn11111;Pwd=fGSGVFZFmV22wy@;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MasterBarang>(entity =>
