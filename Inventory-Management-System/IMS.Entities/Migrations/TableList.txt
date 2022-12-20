@@ -1,0 +1,7 @@
+﻿MasterBarang
+Outlet
+MasterGudang
+UserRoleEnum
+MasterUser
+StockTransaction
+MasterKategori
