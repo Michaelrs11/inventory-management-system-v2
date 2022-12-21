@@ -89,18 +89,18 @@ namespace IMS.BE.Services.Transactions
             if (isInbound)
             {
                 return @"SELECT
-	                    st.SKUID AS [SkuId], 
-	                    mb.Name AS [Name],
-	                    SUM(CAST(st.StockIn AS NUMERIC)) AS [StockIn]
-                    FROM StockTransaction st
-                    JOIN MasterBarang mb ON st.SKUID = mb.SKUID";
+		                    st.SKUID SkuId, 
+		                    mb.Name Name,
+		                    SUM(CAST(st.StockIn AS SIGNED)) StockIn
+                        FROM StockTransaction st
+                        JOIN MasterBarang mb ON st.SKUID = mb.SKUID ";
             }
             return @"SELECT
-	                    st.SKUID AS [SkuId], 
-	                    mb.Name AS [Name],
-	                    SUM(CAST(st.StockOut AS NUMERIC)) AS [StockOut]
+		                st.SKUID SkuId, 
+		                mb.Name Name,
+		                SUM(CAST(st.StockOut AS SIGNED)) StockOut
                     FROM StockTransaction st
-                    JOIN MasterBarang mb ON st.SKUID = mb.SKUID";
+                    JOIN MasterBarang mb ON st.SKUID = mb.SKUID ";
            
         }
 
@@ -146,9 +146,7 @@ namespace IMS.BE.Services.Transactions
 
             if (currentPage != 0)
             {
-                query.Append(@"
-OFFSET @Offset ROWS
-FETCH NEXT @PageSize ROWS ONLY");
+                query.Append(@"LIMIT @Offset, @PageSize");
             }
 
             return query;

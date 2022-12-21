@@ -27,11 +27,11 @@ namespace IMS.BE.Services.Transactions
             _ = nameof(MasterBarang.Name);
 
             return @"SELECT
-	                    st.SKUID AS [SkuId], 
-	                    mb.Name AS [Name],
-	                    SUM(CAST(st.StockIn AS NUMERIC)) - SUM(CAST(st.StockOut AS NUMERIC)) AS [Stock]
+	                    st.SKUID SkuId, 
+	                    mb.Name Name,
+	                    SUM(CAST(st.StockIn AS SIGNED)) - SUM(CAST(st.StockOut AS SIGNED)) Stock
                     FROM StockTransaction st
-                    JOIN MasterBarang mb ON st.SKUID = mb.SKUID";
+                    JOIN MasterBarang mb ON st.SKUID = mb.SKUID ";
         }
 
         public string GenerateFilterQuery(string? gudangCode, DateTime? dateFrom,
@@ -76,9 +76,7 @@ namespace IMS.BE.Services.Transactions
 
             if (currentPage != 0)
             {
-                query.Append(@"
-OFFSET @Offset ROWS
-FETCH NEXT @PageSize ROWS ONLY");
+                query.Append(@"LIMIT @Offset, @PageSize");
             }
 
             return query;
