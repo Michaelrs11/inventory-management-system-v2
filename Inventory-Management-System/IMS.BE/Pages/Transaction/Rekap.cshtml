@@ -136,7 +136,7 @@
                             }
                             else
                             {
-                                startPage = (currentPage.Value - 1 == 0) ? 1 : currentPage.Value - 1;
+                                startPage = (currentPage.Value == 0) ? 1 : currentPage.Value;
                             }
 
                             endPage = (endPage > 5) ? startPage + 4 : endPage;
@@ -153,7 +153,7 @@
 
                             @for (var pge = startPage; pge <= endPage; pge++)
                             {
-                                if (currentPage.Value - 1 == pge)
+                                if (currentPage.Value == pge)
                                 {
                                     activeClass = "active";
                                 }
